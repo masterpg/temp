@@ -1,0 +1,22 @@
+<style scoped lang="sass">
+@import '../../styles/lib.variables'
+
+.container
+  color: $indigo-12
+</style>
+
+<template>
+  <div class="container">
+    Hello Wold One {{ msg }}
+    <q-btn flat rounded color="primary" label="Cancel" />
+  </div>
+</template>
+
+<script lang="ts">
+import { Component, Prop, Vue } from 'vue-property-decorator'
+
+@Component
+export default class HelloWorldOne extends Vue {
+  @Prop() private msg!: string
+}
+</script>
