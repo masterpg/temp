@@ -1,14 +1,11 @@
 {
   "extends": "./tsconfig.base",
   "compilerOptions": {
-    "outDir": "lib/types"
+    "outDir": "dist/types"
   },
   "include": [
-    "src/base/**/*.ts",
-    "src/base/**/*.tsx",
-    "src/base/**/*.vue"
-  ],
-  "exclude": [
-    "src/components"
+    "src/**/*.ts",
+    "src/**/*.tsx",
+    "src/**/*.vue"
   ]
 }

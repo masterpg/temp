@@ -7,7 +7,7 @@ node_modules/
 screenshots/
 firebase.config.js
 
-lib/**/*.js.map
+dist/**/*.js.map
 
 src/**/*.js.map
 

@@ -1,5 +1,5 @@
-import { BaseComponent } from '@/base/component/base-component'
-import { Resizable } from '@/base/component/resizable'
+import { BaseComponent } from './base-component'
+import { Resizable } from './resizable'
 import Vue from 'vue'
 import { mixins } from 'vue-class-component'
 

@@ -1,6 +1,6 @@
-import { BaseDialog, Dialog } from '@/base/component/dialog'
-import { BaseComponent } from '@/base/component/base-component'
-import { Resizable } from '@/base/component/resizable'
+import { BaseDialog, Dialog } from './dialog'
+import { BaseComponent } from './base-component'
+import { Resizable } from './resizable'
 
 /**
  * Mixinのサンプルです。

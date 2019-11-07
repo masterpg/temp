@@ -1,4 +1,4 @@
-import { Breakpoint } from '@/base/component/breakpoint'
+import { Breakpoint } from './breakpoint'
 import { Component } from 'vue-property-decorator'
 
 /**
