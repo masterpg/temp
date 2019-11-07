@@ -10,3 +10,5 @@ export default {
     }
   },
 } as PluginObject<any>
+
+export * from '@/base/component'

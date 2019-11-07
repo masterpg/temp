@@ -3,12 +3,12 @@
   "compilerOptions": {
     "outDir": "lib/types"
   },
-  "files":[
-    "src/components/index.ts"
-  ],
   "include": [
-    "src/components/**/*.ts",
-    "src/components/**/*.tsx",
-    "src/components/**/*.vue"
+    "src/base/**/*.ts",
+    "src/base/**/*.tsx",
+    "src/base/**/*.vue"
+  ],
+  "exclude": [
+    "src/components"
   ]
 }

@@ -1,8 +1,9 @@
 .eslintrc.js
 .idea/
 example/
+lib/
 node_modules/
-package.json
 public/
+package.json
 tsconfig.json
 vue.config.js
