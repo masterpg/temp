@@ -15,9 +15,8 @@
     "tests/helpers"
   ],
   "scripts": {
-    "serve": "vue-cli-service serve",
-    "build": "vue-cli-service build --target lib --name vue-front-lib ./src/index.ts",
     "build:types": "tsc --emitDeclarationOnly --declaration --project tsconfig.types.json",
+    "build": "vue-cli-service build --target lib --name vue-front-lib ./src/index.ts && npm run build:types && cp -rf ./src/styles ./dist",
     "test:unit": "vue-cli-service test:unit",
     "lint": "./node_modules/web-base-lib/tools/lint.sh"
   },
