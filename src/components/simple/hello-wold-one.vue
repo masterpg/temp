@@ -13,12 +13,13 @@
 </template>
 
 <script lang="ts">
-import { BaseComponent, Resizable } from '../../base/component'
+import { BaseComponent, Resizable } from '../base'
 import { Component, Prop } from 'vue-property-decorator'
 import { mixins } from 'vue-class-component'
 
 @Component
 export default class HelloWorldOne extends mixins(BaseComponent, Resizable) {
-  @Prop() private msg!: string
+  @Prop({ default: 'Default Value!' })
+  msg!: string
 }
 </script>

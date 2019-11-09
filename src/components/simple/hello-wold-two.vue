@@ -10,7 +10,7 @@
 </template>
 
 <script lang="ts">
-import { BaseComponent, Resizable } from '../../base/component'
+import { BaseComponent, Resizable } from '../base'
 import { Component, Prop } from 'vue-property-decorator'
 import { mixins } from 'vue-class-component'
 

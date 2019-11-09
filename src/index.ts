@@ -11,4 +11,5 @@ export default {
   },
 } as PluginObject<any>
 
-export * from './base/component'
+export * from './config'
+export * from './components'
