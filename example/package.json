@@ -1,8 +1,8 @@
 {
   "name": "vue-front-lib2-example",
   "scripts": {
-    "dev:lib": "node ./node_modules/web-base-lib/tools/lndir.js ../dist ./node_modules/temp/dist",
-    "watch:lib": "node ./node_modules/web-base-lib/tools/lndir.js ../src ./node_modules/vue-front-lib2/src --watch & node ./node_modules/web-base-lib/tools/lndir.js ../tests ./node_modules/vue-front-lib2/tests --watch",
+    "dev:lib": "node ../tools/dev.js .. ./node_modules/temp",
+    "watch:lib": "node ../tools/dev.js .. ./node_modules/temp --watch",
     "build:dev": "npm run dev:lib && vue-cli-service build --mode development",
     "build:stg": "vue-cli-service build --mode staging",
     "build": "vue-cli-service build --mode production",

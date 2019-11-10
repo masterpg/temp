@@ -13,4 +13,3 @@ export default {
 
 export * from './base/component'
 export * from './config'
-export * from './components'
