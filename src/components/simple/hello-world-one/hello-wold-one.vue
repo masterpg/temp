@@ -1,5 +1,5 @@
 <style scoped lang="sass">
-@import '../../styles/lib.variables'
+@import '../../../styles/lib.variables'
 
 .container
   color: $indigo-12
@@ -13,7 +13,7 @@
 </template>
 
 <script lang="ts">
-import { BaseComponent, Resizable } from '../../base/component'
+import { BaseComponent, Resizable } from '../../../base/component'
 import { Component, Prop } from 'vue-property-decorator'
 import { mixins } from 'vue-class-component'
 

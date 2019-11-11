@@ -1,0 +1,100 @@
+import CompTreeNode from './comp-tree-node.vue';
+import { CompTreeNodeData } from './types';
+import CompTreeNodeItem from './comp-tree-node-item.vue';
+import CompTreeView from './comp-tree-view.vue';
+/**
+ * ノードを作成します。
+ * @param treeView
+ * @param nodeData
+ */
+export declare function newNode(treeView: CompTreeView, nodeData: CompTreeNodeData): CompTreeNode;
+/**
+ * 指定されたノードの子孫を配列で取得します。
+ * @param node
+ */
+export declare function getDescendants(node: CompTreeNode): CompTreeNode[];
+/**
+ * 指定されたノードの子孫をマップで取得します。
+ * @param node
+ */
+export declare function getDescendantMap(node: CompTreeNode): {
+    [value: string]: CompTreeNode;
+};
+/**
+ * ノードが追加された旨を通知するイベントを発火します。
+ * @param node
+ */
+export declare function dispatchNodeAdded(node: CompTreeNode): void;
+/**
+ * ノードが削除される直前を通知するイベントを発火します。
+ * @param parent
+ * @param child
+ */
+export declare function dispatchNodeBeforeRemoved(parent: CompTreeView | CompTreeNode, child: CompTreeNode): void;
+/**
+ * ノードが削除された旨を通知するイベントを発火します。
+ * @param parent
+ * @param child
+ */
+export declare function dispatchNodeRemoved(parent: CompTreeView | CompTreeNode, child: CompTreeNode): void;
+/**
+ * ノードの選択が変更された旨を通知するイベントを発火します。
+ * @param target
+ */
+export declare function dispatchSelectedChanged(target: CompTreeNode | CompTreeNodeItem): void;
+export interface NodePropertyChangeDetail {
+    property: 'value' | 'label';
+    oldValue: any;
+    newValue: any;
+}
+/**
+ * ノードのプロパティが変更された旨を通知するイベントを発火します。
+ * @param target
+ * @param detail
+ */
+export declare function dispatchNodePropertyChanged(target: CompTreeNode | CompTreeNodeItem, detail: NodePropertyChangeDetail): void;
+/**
+ * 文字列を浮動小数点数へ変換します。
+ * @param value
+ */
+export declare function toFloat(value?: string): number;
+/**
+ * 指定されたスタイルの幅を取得します。
+ * @param style
+ */
+export declare function getElementWidth(style: CSSStyleDeclaration): number;
+/**
+ * 指定された要素の幅を取得します。
+ * @param element
+ */
+export declare function getElementWidth(element: Element): number;
+/**
+ * 指定されたスタイルの枠の幅を取得します。
+ * @param style
+ */
+export declare function getElementFrameWidth(style: CSSStyleDeclaration): number;
+/**
+ * 指定された要素の枠の幅を取得します。
+ * @param element
+ */
+export declare function getElementFrameWidth(element: Element): number;
+/**
+ * 指定された要素の高さを取得します。
+ * @param element
+ */
+export declare function getElementHeight(element: Element): number;
+/**
+ * 指定されたスタイルの高さを取得します。
+ * @param style
+ */
+export declare function getElementHeight(style: CSSStyleDeclaration): number;
+/**
+ * 指定された要素の枠の高さを取得します。
+ * @param element
+ */
+export declare function getElementFrameHeight(element: Element): number;
+/**
+ * 指定されたスタイルの枠の高さを取得します。
+ * @param style
+ */
+export declare function getElementFrameHeight(style: CSSStyleDeclaration): number;

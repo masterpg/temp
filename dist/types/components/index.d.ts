@@ -1,3 +1,3 @@
-import HelloWorldOne from './simple/hello-wold-one.vue';
-import HelloWorldTwo from './simple/hello-wold-two.vue';
-export { HelloWorldOne, HelloWorldTwo };
+export * from './simple/hello-world-one';
+export * from './simple/hello-world-two';
+export * from './simple/tree-view';
