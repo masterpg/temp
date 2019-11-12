@@ -49,12 +49,12 @@ export default class CompCheckboxNodeItem extends CompTreeNodeItem<CompCheckboxT
     }
   }
 
-  get extraEventNames(): string[] {
-    return ['checked-changed']
-  }
-
   protected initPlaceholder(nodeData: CompCheckboxTreeNodeData): void {
     this.m_checked = Boolean(nodeData.checked)
+  }
+
+  get extraEventNames(): string[] {
+    return ['checked-changed']
   }
 
   private m_dispatchCheckedChanged(): void {

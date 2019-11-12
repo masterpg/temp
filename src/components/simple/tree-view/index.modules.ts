@@ -33,7 +33,7 @@ export declare class CompTreeView<NodeData extends CompTreeNodeData = any> exten
    *   <li>sortFunc: ノードをソートする関数。insertIndexと同時に指定することはできない。</li>
    * </ul>
    */
-  addChild(child: NodeData | CompTreeNode, options: { parent?: string; insertIndex?: number | null; sortFunc?: ChildrenSortFunc }): CompTreeNode
+  addChild(child: NodeData | CompTreeNode, options?: { parent?: string; insertIndex?: number | null; sortFunc?: ChildrenSortFunc }): CompTreeNode
 
   /**
    * ノードを削除します。
@@ -83,7 +83,7 @@ export declare class CompTreeNode<NodeItem extends CompTreeNodeItem = any> exten
   /**
    * ノードを特定するための値です。
    */
-  value(): string
+  value: string
 
   /**
    * 選択不可フラグです。
@@ -94,7 +94,7 @@ export declare class CompTreeNode<NodeItem extends CompTreeNodeItem = any> exten
   /**
    * 選択されているか否かです。
    */
-  selected(): boolean
+  selected: boolean
 
   /**
    * 親ノードです。
@@ -109,7 +109,7 @@ export declare class CompTreeNode<NodeItem extends CompTreeNodeItem = any> exten
   /**
    * 標準で発火するイベントとは別に、追加で発火するイベント名のリストです。
    */
-  extraEventNames(): string[]
+  extraEventNames: string[]
 
   /**
    * ノードの最小幅です。
@@ -132,7 +132,7 @@ export declare class CompTreeNode<NodeItem extends CompTreeNodeItem = any> exten
    *   <li>sortFunc: ノードをソートする関数。insertIndexと同時に指定することはできない。</li>
    * </ul>
    */
-  addChild(child: CompTreeNodeData | CompTreeNode, options: { insertIndex?: number | null; sortFunc?: ChildrenSortFunc }): CompTreeNode
+  addChild(child: CompTreeNodeData | CompTreeNode, options?: { insertIndex?: number | null; sortFunc?: ChildrenSortFunc }): CompTreeNode
 
   /**
    * 子ノードを削除します。
@@ -218,8 +218,4 @@ export declare class CompTreeNodeItem<NodeData extends CompTreeNodeData = any> e
 
 export declare class CompCheckboxNodeItem extends CompTreeNodeItem<CompCheckboxTreeNodeData> {
   checked: boolean
-
-  readonly extraEventNames: string[]
-
-  protected initPlaceholder(nodeData: CompCheckboxTreeNodeData): void
 }

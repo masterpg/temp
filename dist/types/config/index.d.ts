@@ -9,24 +9,20 @@ export interface FirebaseConfig {
     messagingSenderId?: string;
     appId: string;
 }
+export interface APIConfig {
+    protocol: string;
+    host: string;
+    port: number;
+    basePath: string;
+    baseURL: string;
+}
 export interface Config {
-    api: {
-        protocol: string;
-        host: string;
-        port: number;
-        basePath: string;
-        baseURL: string;
-    };
     firebase: FirebaseConfig;
+    api: APIConfig;
 }
 export declare abstract class BaseConfig implements Config {
-    constructor(firebaseConfig: FirebaseConfig);
+    constructor(firebaseConfig: FirebaseConfig, apiConfig: Omit<APIConfig, 'baseURL'>);
     readonly firebase: FirebaseConfig;
-    readonly api: {
-        baseURL: string;
-        protocol: string;
-        host: string;
-        port: number;
-        basePath: string;
-    };
+    readonly api: APIConfig;
+    protected getAPIConfig(apiConfig: Omit<APIConfig, 'baseURL'>): APIConfig;
 }
