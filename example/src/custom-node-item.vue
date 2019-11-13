@@ -29,7 +29,7 @@
 </template>
 
 <script lang="ts">
-import { CompTreeNodeData, CompTreeNodeItem } from 'temp'
+import { CompTreeBaseNodeItem, CompTreeNodeData } from 'temp'
 import { Component } from 'vue-property-decorator'
 
 export interface CustomNodeData extends CompTreeNodeData {
@@ -37,7 +37,7 @@ export interface CustomNodeData extends CompTreeNodeData {
 }
 
 @Component
-export default class CustomNodeItem extends CompTreeNodeItem {
+export default class CustomNodeItem extends CompTreeBaseNodeItem {
   private m_checked: boolean = false
 
   get checked(): boolean {

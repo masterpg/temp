@@ -1,5 +1,6 @@
-import { ChildrenSortFunc, CompCheckboxTreeNodeData, CompTreeNodeData, CompTreeNodeEditData } from './types'
+import { ChildrenSortFunc, CompTreeNodeData, CompTreeNodeEditData } from './types'
 import { BaseComponent } from '../../../base/component'
+import CompTreeBaseNodeItem from './comp-tree-base-node-item'
 
 export declare class CompTreeView extends BaseComponent {
   /**
@@ -47,7 +48,7 @@ export declare class CompTreeView extends BaseComponent {
   getNode(value: string): CompTreeNode | undefined
 }
 
-export declare class CompTreeNode<NodeItem extends CompTreeNodeItem = CompTreeNodeItem> extends BaseComponent {
+export declare class CompTreeNode<NodeItem extends CompTreeBaseNodeItem = CompTreeBaseNodeItem> extends BaseComponent {
   readonly treeView: CompTreeView
 
   readonly item: NodeItem
@@ -172,52 +173,8 @@ export declare class CompTreeNode<NodeItem extends CompTreeNodeItem = CompTreeNo
   setEditData(editData: CompTreeNodeEditData): void
 }
 
-export declare class CompTreeNodeItem extends BaseComponent {
-  /**
-   * ラベルです。
-   */
-  label: string
+export declare class CompTreeNodeItem extends CompTreeBaseNodeItem {}
 
-  /**
-   * ノードを特定するための値です。
-   */
-  value: string
-
-  /**
-   * 選択不可フラグです。
-   */
-  unselectable: boolean
-
-  /**
-   * 選択されているか否かです。
-   */
-  selected: boolean
-
-  /**
-   * ノードアイテムが発火する標準のイベントとは別に、独自で発火するイベント名のリストです。
-   * CompTreeNodeItemを拡張し、そのノードアイテムで独自イベントを発火するよう実装した場合、
-   * このプロパティをオーバーライドし、イベント名の配列を返すよう実装してください。
-   */
-  readonly extraEventNames: string[]
-
-  init(nodeData: CompTreeNodeData): void
-
-  /**
-   * ノードを編集するためのデータを設定します。
-   * @param editData
-   */
-  setEditData(editData: CompTreeNodeEditData): void
-
-  /**
-   * CompTreeNodeItemを拡張する際、初期化時に独自処理が必要な場合のプレースホルダーです。
-   * 独自処理が必要な場合はこのメソッドをオーバーライドしてください。
-   * @param nodeData
-   */
-  protected initPlaceholder(nodeData: CompTreeNodeData): void
-
-  protected itemOnClick(e)
-}
-
-export declare class CompCheckboxNodeItem extends CompTreeNodeItem {
+export declare class CompCheckboxNodeItem extends CompTreeBaseNodeItem {
   checked: boolean
 }

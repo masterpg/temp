@@ -1,3 +1,4 @@
+import CompTreeBaseNodeItem from './comp-tree-base-node-item'
 import CompTreeNode from './comp-tree-node.vue'
 import CompTreeNodeItem from './comp-tree-node-item.vue'
 import { Constructor } from 'web-base-lib'

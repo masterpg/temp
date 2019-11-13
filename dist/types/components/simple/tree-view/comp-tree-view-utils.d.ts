@@ -1,6 +1,6 @@
+import CompTreeBaseNodeItem from './comp-tree-base-node-item';
 import CompTreeNode from './comp-tree-node.vue';
 import { CompTreeNodeData } from './types';
-import CompTreeNodeItem from './comp-tree-node-item.vue';
 import CompTreeView from './comp-tree-view.vue';
 /**
  * ノードを作成します。
@@ -41,7 +41,7 @@ export declare function dispatchNodeRemoved(parent: CompTreeView | CompTreeNode,
  * ノードの選択が変更された旨を通知するイベントを発火します。
  * @param target
  */
-export declare function dispatchSelectedChanged(target: CompTreeNode | CompTreeNodeItem): void;
+export declare function dispatchSelectedChanged(target: CompTreeNode | CompTreeBaseNodeItem): void;
 export interface NodePropertyChangeDetail {
     property: 'value' | 'label';
     oldValue: any;
@@ -52,7 +52,7 @@ export interface NodePropertyChangeDetail {
  * @param target
  * @param detail
  */
-export declare function dispatchNodePropertyChanged(target: CompTreeNode | CompTreeNodeItem, detail: NodePropertyChangeDetail): void;
+export declare function dispatchNodePropertyChanged(target: CompTreeNode | CompTreeBaseNodeItem, detail: NodePropertyChangeDetail): void;
 /**
  * 文字列を浮動小数点数へ変換します。
  * @param value

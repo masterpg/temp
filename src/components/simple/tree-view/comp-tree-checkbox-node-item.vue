@@ -30,11 +30,11 @@
 
 <script lang="ts">
 import { CompCheckboxTreeNodeData } from './types'
-import CompTreeNodeItem from './comp-tree-node-item.vue'
+import CompTreeBaseNodeItem from './comp-tree-base-node-item'
 import { Component } from 'vue-property-decorator'
 
 @Component
-export default class CompCheckboxNodeItem extends CompTreeNodeItem {
+export default class CompCheckboxNodeItem extends CompTreeBaseNodeItem {
   private m_checked: boolean = false
 
   get checked(): boolean {

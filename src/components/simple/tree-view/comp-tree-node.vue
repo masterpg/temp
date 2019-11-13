@@ -64,6 +64,7 @@
 import * as treeViewUtils from './comp-tree-view-utils'
 import { ChildrenSortFunc, CompTreeNodeData, CompTreeNodeEditData } from './types'
 import { BaseComponent } from '../../../base/component'
+import CompTreeBaseNodeItem from './comp-tree-base-node-item'
 import CompTreeNodeItem from './comp-tree-node-item.vue'
 import CompTreeView from './comp-tree-view.vue'
 import { Component } from 'vue-property-decorator'
@@ -76,7 +77,7 @@ const isBoolean = require('lodash/isBoolean')
 const isString = require('lodash/isString')
 
 @Component
-export default class CompTreeNode<NodeItem extends CompTreeNodeItem = CompTreeNodeItem> extends BaseComponent {
+export default class CompTreeNode<NodeItem extends CompTreeBaseNodeItem = CompTreeBaseNodeItem> extends BaseComponent {
   //----------------------------------------------------------------------
   //
   //  Lifecycle hooks

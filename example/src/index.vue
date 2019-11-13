@@ -10,7 +10,7 @@
 </template>
 
 <script lang="ts">
-import { BaseComponent, CompTreeView, HelloWorldOne, HelloWorldTwo, Resizable } from 'temp'
+import { BaseComponent, CompTreeNode, CompTreeView, HelloWorldOne, HelloWorldTwo, Resizable } from 'temp'
 import CustomNodeItem, { CustomNodeData } from './custom-node-item.vue'
 import { Component } from 'vue-property-decorator'
 import { mixins } from 'vue-class-component'
@@ -73,6 +73,10 @@ export default class AppPage extends mixins(BaseComponent, Resizable) {
         icon: 'folder',
       },
     ] as CustomNodeData[])
+  }
+
+  hoge(node: CompTreeNode<CustomNodeItem>) {
+    node.item.checked = true
   }
 }
 </script>
