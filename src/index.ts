@@ -1,4 +1,4 @@
-import * as components from './components/index.compoents'
+import * as components from './components'
 import { PluginObject } from 'vue'
 import { Vue as _Vue } from 'vue-property-decorator'
 

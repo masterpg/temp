@@ -76,7 +76,7 @@ const isBoolean = require('lodash/isBoolean')
 const isString = require('lodash/isString')
 
 @Component
-export default class CompTreeNode<NodeItem extends CompTreeNodeItem = any> extends BaseComponent {
+export default class CompTreeNode<NodeItem extends CompTreeNodeItem = CompTreeNodeItem> extends BaseComponent {
   //----------------------------------------------------------------------
   //
   //  Lifecycle hooks
@@ -299,7 +299,10 @@ export default class CompTreeNode<NodeItem extends CompTreeNodeItem = any> exten
    *   <li>sortFunc: ノードをソートする関数。insertIndexと同時に指定することはできない。</li>
    * </ul>
    */
-  addChild(child: CompTreeNodeData | CompTreeNode, options?: { insertIndex?: number | null; sortFunc?: ChildrenSortFunc }): CompTreeNode {
+  addChild<NodeData extends CompTreeNodeData = CompTreeNodeData>(
+    child: NodeData | CompTreeNode,
+    options?: { insertIndex?: number | null; sortFunc?: ChildrenSortFunc }
+  ): CompTreeNode {
     options = options ? options : {}
 
     if (isInteger(options.insertIndex) && options.insertIndex! >= 0 && options.sortFunc) {

@@ -10,8 +10,8 @@
 </template>
 
 <script lang="ts">
-import { BaseComponent, Resizable } from 'temp'
-import { CompTreeView, HelloWorldOne, HelloWorldTwo } from 'temp'
+import { BaseComponent, CompTreeView, HelloWorldOne, HelloWorldTwo, Resizable } from 'temp'
+import CustomNodeItem, { CustomNodeData } from './custom-node-item.vue'
 import { Component } from 'vue-property-decorator'
 import { mixins } from 'vue-class-component'
 
@@ -40,7 +40,10 @@ export default class AppPage extends mixins(BaseComponent, Resizable) {
             value: 'node1-1',
             opened: true,
             icon: 'folder',
-            children: [{ label: 'node1-1-1', value: 'node1-1-1' }, { label: 'node1-1-2', value: 'node1-1-2' }],
+            children: [
+              { label: 'node1-1-1', value: 'node1-1-1', checked: true, itemClass: CustomNodeItem },
+              { label: 'node1-1-2', value: 'node1-1-2', itemClass: CustomNodeItem },
+            ],
           },
           {
             label: 'node1-2',
@@ -69,7 +72,7 @@ export default class AppPage extends mixins(BaseComponent, Resizable) {
         opened: true,
         icon: 'folder',
       },
-    ])
+    ] as CustomNodeData[])
   }
 }
 </script>

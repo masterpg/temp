@@ -34,7 +34,7 @@ import CompTreeNodeItem from './comp-tree-node-item.vue'
 import { Component } from 'vue-property-decorator'
 
 @Component
-export default class CompCheckboxNodeItem extends CompTreeNodeItem<CompCheckboxTreeNodeData> {
+export default class CompCheckboxNodeItem extends CompTreeNodeItem {
   private m_checked: boolean = false
 
   get checked(): boolean {

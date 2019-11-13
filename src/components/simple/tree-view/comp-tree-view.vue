@@ -51,7 +51,7 @@ const isFunction = require('lodash/isFunction')
  * `--comp-tree-padding` | ツリービューのpaddingです | `10px`
  */
 @Component
-export default class CompTreeView<NodeData extends CompTreeNodeData = any> extends BaseComponent {
+export default class CompTreeView extends BaseComponent {
   //----------------------------------------------------------------------
   //
   //  Properties
@@ -137,7 +137,7 @@ export default class CompTreeView<NodeData extends CompTreeNodeData = any> exten
    * @param nodeDataList ノードツリーを構築するためのデータ
    * @param insertIndex ノード挿入位置
    */
-  buildTree(nodeDataList: NodeData[], insertIndex?: number): void {
+  buildTree<NodeData extends CompTreeNodeData = CompTreeNodeData>(nodeDataList: NodeData[], insertIndex?: number): void {
     nodeDataList.forEach(nodeData => {
       this.m_addNodeByData(nodeData, { insertIndex })
       if (!(insertIndex === undefined || insertIndex === null)) {
@@ -156,7 +156,10 @@ export default class CompTreeView<NodeData extends CompTreeNodeData = any> exten
    *   <li>sortFunc: ノードをソートする関数。insertIndexと同時に指定することはできない。</li>
    * </ul>
    */
-  addChild(child: NodeData | CompTreeNode, options?: { parent?: string; insertIndex?: number | null; sortFunc?: ChildrenSortFunc }): CompTreeNode {
+  addChild<NodeData extends CompTreeNodeData = CompTreeNodeData>(
+    child: NodeData | CompTreeNode,
+    options?: { parent?: string; insertIndex?: number | null; sortFunc?: ChildrenSortFunc }
+  ): CompTreeNode {
     options = options || {}
 
     if (isInteger(options.insertIndex) && options.insertIndex! >= 0 && options.sortFunc) {
@@ -180,7 +183,7 @@ export default class CompTreeView<NodeData extends CompTreeNodeData = any> exten
       }
       // 引数のノードがノードデータで指定された場合
       else if (childType === 'Data') {
-        node = this.m_addNodeByData(child as NodeData, options)
+        node = this.m_addNodeByData(child as CompTreeNodeData, options)
       }
     }
 
@@ -223,7 +226,7 @@ export default class CompTreeView<NodeData extends CompTreeNodeData = any> exten
   //
   //----------------------------------------------------------------------
 
-  private m_addNodeByData(nodeData: NodeData, options?: { insertIndex?: number | null; sortFunc?: ChildrenSortFunc }): CompTreeNode {
+  private m_addNodeByData(nodeData: CompTreeNodeData, options?: { insertIndex?: number | null; sortFunc?: ChildrenSortFunc }): CompTreeNode {
     options = options || {}
 
     if (this.getNode(nodeData.value)) {

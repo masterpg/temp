@@ -31,7 +31,7 @@ const isBoolean = require('lodash/isBoolean')
 const isString = require('lodash/isString')
 
 @Component
-export default class CompTreeNodeItem<NodeData extends CompTreeNodeData = any> extends BaseComponent {
+export default class CompTreeNodeItem extends BaseComponent {
   //----------------------------------------------------------------------
   //
   //  Properties
@@ -112,7 +112,7 @@ export default class CompTreeNodeItem<NodeData extends CompTreeNodeData = any> e
   //
   //----------------------------------------------------------------------
 
-  init(nodeData: NodeData): void {
+  init(nodeData: CompTreeNodeData): void {
     this.m_label = nodeData.label
     this.m_value = nodeData.value
     this.m_unselectable = Boolean(nodeData.unselectable)
@@ -151,7 +151,7 @@ export default class CompTreeNodeItem<NodeData extends CompTreeNodeData = any> e
    * 独自処理が必要な場合はこのメソッドをオーバーライドしてください。
    * @param nodeData
    */
-  protected initPlaceholder(nodeData: NodeData): void {}
+  protected initPlaceholder(nodeData: CompTreeNodeData): void {}
 
   /**
    * selectedの設定を行います。
