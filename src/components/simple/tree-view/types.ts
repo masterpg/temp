@@ -1,4 +1,3 @@
-import CompTreeBaseNodeItem from './comp-tree-base-node-item'
 import CompTreeNode from './comp-tree-node.vue'
 import CompTreeNodeItem from './comp-tree-node-item.vue'
 import { Constructor } from 'web-base-lib'
@@ -48,8 +47,8 @@ export interface CompTreeNodeData {
 
 export interface CompTreeNodeEditData extends Partial<Omit<CompTreeNodeData, 'itemClass' | 'children'>> {}
 
-export type ChildrenSortFunc = (a: CompTreeNode, b: CompTreeNode) => number
+export type ChildrenSortFunc<Node extends CompTreeNode = CompTreeNode> = (a: Node, b: Node) => number
 
-export interface CompCheckboxTreeNodeData extends CompTreeNodeData {
+export interface CompTreeCheckboxNodeData extends CompTreeNodeData {
   checked?: boolean
 }

@@ -24,13 +24,12 @@
 </template>
 
 <script lang="ts">
-import * as treeViewUtils from './comp-tree-view-utils'
 import { ChildrenSortFunc, CompTreeNodeData } from './types'
 import { BaseComponent } from '../../../base/component'
 import CompTreeNode from './comp-tree-node.vue'
+import { CompTreeViewUtils } from './comp-tree-view-utils'
 import { Component } from 'vue-property-decorator'
 import { NoCache } from '../../../base/decorators'
-import { NodePropertyChangeDetail } from './comp-tree-view-utils'
 import Vue from 'vue'
 const isInteger = require('lodash/isInteger')
 const isFunction = require('lodash/isFunction')
@@ -51,7 +50,7 @@ const isFunction = require('lodash/isFunction')
  * `--comp-tree-padding` | ツリービューのpaddingです | `10px`
  */
 @Component
-export default class CompTreeView extends BaseComponent {
+export default class CompTreeView<NodeData extends CompTreeNodeData = any> extends BaseComponent {
   //----------------------------------------------------------------------
   //
   //  Properties
@@ -114,7 +113,7 @@ export default class CompTreeView extends BaseComponent {
         result = child.minWidth
       }
     }
-    return result + treeViewUtils.getElementFrameWidth(this.m_childContainer)
+    return result + CompTreeViewUtils.getElementFrameWidth(this.m_childContainer)
   }
 
   //--------------------------------------------------
@@ -137,7 +136,7 @@ export default class CompTreeView extends BaseComponent {
    * @param nodeDataList ノードツリーを構築するためのデータ
    * @param insertIndex ノード挿入位置
    */
-  buildTree<NodeData extends CompTreeNodeData = CompTreeNodeData>(nodeDataList: NodeData[], insertIndex?: number): void {
+  buildTree(nodeDataList: NodeData[], insertIndex?: number): void {
     nodeDataList.forEach(nodeData => {
       this.m_addNodeByData(nodeData, { insertIndex })
       if (!(insertIndex === undefined || insertIndex === null)) {
@@ -156,10 +155,7 @@ export default class CompTreeView extends BaseComponent {
    *   <li>sortFunc: ノードをソートする関数。insertIndexと同時に指定することはできない。</li>
    * </ul>
    */
-  addChild<NodeData extends CompTreeNodeData = CompTreeNodeData>(
-    child: NodeData | CompTreeNode,
-    options?: { parent?: string; insertIndex?: number | null; sortFunc?: ChildrenSortFunc }
-  ): CompTreeNode {
+  addChild(child: NodeData | CompTreeNode, options?: { parent?: string; insertIndex?: number | null; sortFunc?: ChildrenSortFunc }): CompTreeNode {
     options = options || {}
 
     if (isInteger(options.insertIndex) && options.insertIndex! >= 0 && options.sortFunc) {
@@ -183,7 +179,7 @@ export default class CompTreeView extends BaseComponent {
       }
       // 引数のノードがノードデータで指定された場合
       else if (childType === 'Data') {
-        node = this.m_addNodeByData(child as CompTreeNodeData, options)
+        node = this.m_addNodeByData(child as NodeData, options)
       }
     }
 
@@ -202,7 +198,7 @@ export default class CompTreeView extends BaseComponent {
     // (node.parentが空の場合、親はツリービュー)
     if (!node.parent) {
       this.m_removeChildFromContainer(node)
-      treeViewUtils.dispatchNodeRemoved(this, node)
+      CompTreeViewUtils.dispatchNodeRemoved(this, node)
     }
     // 親がノードの場合
     else {
@@ -226,7 +222,7 @@ export default class CompTreeView extends BaseComponent {
   //
   //----------------------------------------------------------------------
 
-  private m_addNodeByData(nodeData: CompTreeNodeData, options?: { insertIndex?: number | null; sortFunc?: ChildrenSortFunc }): CompTreeNode {
+  private m_addNodeByData(nodeData: NodeData, options?: { insertIndex?: number | null; sortFunc?: ChildrenSortFunc }): CompTreeNode {
     options = options || {}
 
     if (this.getNode(nodeData.value)) {
@@ -234,7 +230,7 @@ export default class CompTreeView extends BaseComponent {
     }
 
     // ノードの作成
-    const node = treeViewUtils.newNode(this, nodeData)
+    const node = CompTreeViewUtils.newNode(this, nodeData)
 
     // ノード挿入位置を決定
     const insertIndex = this.m_getInsertIndex(node, options)
@@ -249,7 +245,7 @@ export default class CompTreeView extends BaseComponent {
     }
 
     // ノードが追加されたことを通知するイベントを発火
-    treeViewUtils.dispatchNodeAdded(node)
+    CompTreeViewUtils.dispatchNodeAdded(node)
 
     return node
   }
@@ -278,7 +274,7 @@ export default class CompTreeView extends BaseComponent {
     }
 
     // ノードが追加されたことを通知するイベントを発火
-    treeViewUtils.dispatchNodeAdded(node)
+    CompTreeViewUtils.dispatchNodeAdded(node)
 
     return node
   }
@@ -407,7 +403,7 @@ export default class CompTreeView extends BaseComponent {
     e.stopImmediatePropagation()
 
     const node = e.detail.node as CompTreeNode
-    for (const descendant of treeViewUtils.getDescendants(node)) {
+    for (const descendant of CompTreeViewUtils.getDescendants(node)) {
       delete this.m_allNodes[descendant.value]
     }
     delete this.m_allNodes[node.value]
@@ -421,7 +417,7 @@ export default class CompTreeView extends BaseComponent {
     e.stopImmediatePropagation()
 
     const node = e.target.__vue__ as CompTreeNode
-    const detail = e.detail as NodePropertyChangeDetail
+    const detail = e.detail as CompTreeViewUtils.NodePropertyChangeDetail
 
     if (detail.property === 'value') {
       delete this.m_allNodes[detail.oldValue]

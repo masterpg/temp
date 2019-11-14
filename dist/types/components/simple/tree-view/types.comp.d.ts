@@ -2,23 +2,13 @@ import { ChildrenSortFunc, CompTreeNodeData, CompTreeNodeEditData } from './type
 import { BaseComponent } from '../../../base/component'
 import CompTreeBaseNodeItem from './comp-tree-base-node-item'
 
-export declare class CompTreeView extends BaseComponent {
-  /**
-   * ツリービューのトップレベルのノードです。
-   */
-  readonly children: CompTreeNode[]
-
-  /**
-   * 選択ノードです。
-   */
-  selectedNode: CompTreeNode | undefined
-
+export declare class CompTreeView<NodeData extends CompTreeNodeData = any> extends BaseComponent {
   /**
    * 指定されたノードデータからノードツリーを構築します。
    * @param nodeDataList ノードツリーを構築するためのデータ
    * @param insertIndex ノード挿入位置
    */
-  buildTree<NodeData extends CompTreeNodeData = CompTreeNodeData>(nodeDataList: NodeData[], insertIndex?: number): void
+  buildTree(nodeDataList: NodeData[], insertIndex?: number): void
 
   /**
    * 子ノードを追加します。
@@ -30,10 +20,7 @@ export declare class CompTreeView extends BaseComponent {
    *   <li>sortFunc: ノードをソートする関数。insertIndexと同時に指定することはできない。</li>
    * </ul>
    */
-  addChild<NodeData extends CompTreeNodeData = CompTreeNodeData>(
-    child: NodeData | CompTreeNode,
-    options?: { parent?: string; insertIndex?: number | null; sortFunc?: ChildrenSortFunc }
-  ): CompTreeNode
+  addChild(child: NodeData | CompTreeNode, options?: { parent?: string; insertIndex?: number | null; sortFunc?: ChildrenSortFunc }): CompTreeNode
 
   /**
    * ノードを削除します。
@@ -56,19 +43,21 @@ export declare class CompTreeNode<NodeItem extends CompTreeBaseNodeItem = CompTr
   /**
    * 自身が最年長のノードかを示すフラグです。
    */
-  isEldest: boolean
+  isEldest: boolean = false
 
   /**
    * アイコン名です。
    * https://material.io/tools/icons/?style=baseline
    */
-  icon: string
+  icon: string = ''
 
   /**
    * アイコンの色を指定します。
    * 例: primary, indigo-8
    */
-  iconColor: string
+  iconColor: string = ''
+
+  private m_opened: boolean = false
 
   /**
    * アイテムの開閉です。
@@ -109,72 +98,60 @@ export declare class CompTreeNode<NodeItem extends CompTreeBaseNodeItem = CompTr
   /**
    * 標準で発火するイベントとは別に、追加で発火するイベント名のリストです。
    */
-  extraEventNames: string[]
+  readonly extraEventNames: string[]
 
   /**
    * ノードの最小幅です。
    */
   readonly minWidth: number
+}
+
+export declare class CompTreeNodeItem<NodeData extends CompTreeNodeData = any> extends BaseComponent {
+  /**
+   * ラベルです。
+   */
+  label: string
 
   /**
-   * ノードの初期化を行います。
-   * @param treeView
-   * @param nodeData
+   * ノードを特定するための値です。
    */
-  init(treeView: CompTreeView, nodeData: CompTreeNodeData): void
+  value: string
 
   /**
-   * 子ノードを追加します。
-   * @param child ノード、またはノードを構築するためのデータ
-   * @param options
-   * <ul>
-   *   <li>insertIndex: ノード挿入位置。sortFuncと同時に指定することはできない。</li>
-   *   <li>sortFunc: ノードをソートする関数。insertIndexと同時に指定することはできない。</li>
-   * </ul>
+   * 選択不可フラグです。
    */
-  addChild<NodeData extends CompTreeNodeData = CompTreeNodeData>(
-    child: NodeData | CompTreeNode,
-    options?: { insertIndex?: number | null; sortFunc?: ChildrenSortFunc }
-  ): CompTreeNode
+  unselectable: boolean
 
   /**
-   * 子ノードを削除します。
-   * @param childNode
+   * 選択されているか否かです。
    */
-  removeChild(childNode: CompTreeNode): void
+  selected: boolean
 
   /**
-   * 子ノードの開閉をトグルします。
-   * @param animated
+   * ノードアイテムが発火する標準のイベントとは別に、独自で発火するイベント名のリストです。
+   * CompTreeNodeItemを拡張し、そのノードアイテムで独自イベントを発火するよう実装した場合、
+   * このプロパティをオーバーライドし、イベント名の配列を返すよう実装してください。
    */
-  toggle(animated: boolean): void
+  readonly extraEventNames: string[]
 
-  /**
-   * 子ノードを展開します。
-   * @param animated
-   */
-  open(animated: boolean): void
-
-  /**
-   * 子ノードを閉じます。
-   * @param animated
-   */
-  close(animated: boolean): void
-
-  /**
-   * ルートノードを取得します。
-   */
-  getRootNode(): CompTreeNode
+  init(nodeData: NodeData): void
 
   /**
    * ノードを編集するためのデータを設定します。
    * @param editData
    */
   setEditData(editData: CompTreeNodeEditData): void
+
+  /**
+   * CompTreeNodeItemを拡張する際、初期化時に独自処理が必要な場合のプレースホルダーです。
+   * 独自処理が必要な場合はこのメソッドをオーバーライドしてください。
+   * @param nodeData
+   */
+  protected initPlaceholder(nodeData: NodeData): void {}
+
+  protected itemOnClick(e)
 }
 
-export declare class CompTreeNodeItem extends CompTreeBaseNodeItem {}
-
-export declare class CompCheckboxNodeItem extends CompTreeBaseNodeItem {
+export declare class CompTreeCheckboxNodeItem extends CompTreeNodeItem<CompTreeCheckboxNodeData> {
   checked: boolean
 }

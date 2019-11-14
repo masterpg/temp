@@ -61,15 +61,13 @@
 </template>
 
 <script lang="ts">
-import * as treeViewUtils from './comp-tree-view-utils'
 import { ChildrenSortFunc, CompTreeNodeData, CompTreeNodeEditData } from './types'
 import { BaseComponent } from '../../../base/component'
-import CompTreeBaseNodeItem from './comp-tree-base-node-item'
 import CompTreeNodeItem from './comp-tree-node-item.vue'
 import CompTreeView from './comp-tree-view.vue'
+import { CompTreeViewUtils } from './comp-tree-view-utils'
 import { Component } from 'vue-property-decorator'
 import { NoCache } from '../../../base/decorators'
-import { NodePropertyChangeDetail } from './comp-tree-view-utils'
 import Vue from 'vue'
 const isInteger = require('lodash/isInteger')
 const isFunction = require('lodash/isFunction')
@@ -77,7 +75,7 @@ const isBoolean = require('lodash/isBoolean')
 const isString = require('lodash/isString')
 
 @Component
-export default class CompTreeNode<NodeItem extends CompTreeBaseNodeItem = CompTreeBaseNodeItem> extends BaseComponent {
+export default class CompTreeNode<NodeItem extends CompTreeNodeItem = any> extends BaseComponent {
   //----------------------------------------------------------------------
   //
   //  Lifecycle hooks
@@ -222,9 +220,9 @@ export default class CompTreeNode<NodeItem extends CompTreeBaseNodeItem = CompTr
     // ノードアイテム部分の幅を取得
     let itemContainerWidth = 0
     for (const el of Array.from(this.m_itemContainer.children)) {
-      itemContainerWidth += treeViewUtils.getElementWidth(el)
+      itemContainerWidth += CompTreeViewUtils.getElementWidth(el)
     }
-    itemContainerWidth += treeViewUtils.getElementFrameWidth(this.m_itemContainer)
+    itemContainerWidth += CompTreeViewUtils.getElementFrameWidth(this.m_itemContainer)
 
     // 子ノードの中で最大幅のものを取得
     let childContainerWidth = 0
@@ -232,7 +230,7 @@ export default class CompTreeNode<NodeItem extends CompTreeBaseNodeItem = CompTr
       for (const child of this.children) {
         if (childContainerWidth < child.minWidth) {
           childContainerWidth = child.minWidth
-          childContainerWidth += treeViewUtils.getElementFrameWidth(this.m_childContainer)
+          childContainerWidth += CompTreeViewUtils.getElementFrameWidth(this.m_childContainer)
         }
       }
     }
@@ -300,11 +298,8 @@ export default class CompTreeNode<NodeItem extends CompTreeBaseNodeItem = CompTr
    *   <li>sortFunc: ノードをソートする関数。insertIndexと同時に指定することはできない。</li>
    * </ul>
    */
-  addChild<NodeData extends CompTreeNodeData = CompTreeNodeData>(
-    child: NodeData | CompTreeNode,
-    options?: { insertIndex?: number | null; sortFunc?: ChildrenSortFunc }
-  ): CompTreeNode {
-    options = options ? options : {}
+  addChild(child: CompTreeNodeData | CompTreeNode, options?: { insertIndex?: number | null; sortFunc?: ChildrenSortFunc }): CompTreeNode {
+    options = options || {}
 
     if (isInteger(options.insertIndex) && options.insertIndex! >= 0 && options.sortFunc) {
       throw new Error('You cannot specify both "insertIndex" and "sortFunc".')
@@ -402,7 +397,7 @@ export default class CompTreeNode<NodeItem extends CompTreeBaseNodeItem = CompTr
     }
 
     // 子ノードの作成
-    const childNode = treeViewUtils.newNode(this.treeView, childNodeData)
+    const childNode = CompTreeViewUtils.newNode(this.treeView, childNodeData)
 
     // ノード挿入位置を決定
     const insertIndex = this.m_getInsertIndex(childNode, options)
@@ -433,7 +428,7 @@ export default class CompTreeNode<NodeItem extends CompTreeBaseNodeItem = CompTr
     }
 
     // ノードが追加されたことを通知するイベントを発火
-    treeViewUtils.dispatchNodeAdded(childNode)
+    CompTreeViewUtils.dispatchNodeAdded(childNode)
 
     return childNode
   }
@@ -442,7 +437,7 @@ export default class CompTreeNode<NodeItem extends CompTreeBaseNodeItem = CompTr
     options = options || {}
 
     // 追加しようとするノードの子に自ノードが含まれないことを検証
-    const descendantMap = treeViewUtils.getDescendantMap(childNode)
+    const descendantMap = CompTreeViewUtils.getDescendantMap(childNode)
     if (descendantMap[this.value]) {
       throw new Error(`The specified node "${childNode.value}" contains the new parent "${this.value}".`)
     }
@@ -484,7 +479,7 @@ export default class CompTreeNode<NodeItem extends CompTreeBaseNodeItem = CompTr
     }
 
     // ノードが追加されたことを通知するイベントを発火
-    treeViewUtils.dispatchNodeAdded(childNode)
+    CompTreeViewUtils.dispatchNodeAdded(childNode)
 
     return childNode
   }
@@ -547,7 +542,7 @@ export default class CompTreeNode<NodeItem extends CompTreeBaseNodeItem = CompTr
     let result = 0
 
     if (this.opened) {
-      result += treeViewUtils.getElementFrameHeight(this.m_childContainer)
+      result += CompTreeViewUtils.getElementFrameHeight(this.m_childContainer)
       for (let child of this.children) {
         result += child.m_getChildrenContainerHeight(base)
       }
@@ -592,12 +587,12 @@ export default class CompTreeNode<NodeItem extends CompTreeBaseNodeItem = CompTr
   private m_removeChild(childNode: CompTreeNode, isDispatchEvent: boolean): boolean {
     const index = this.children.indexOf(childNode)
     if (index >= 0) {
-      isDispatchEvent && treeViewUtils.dispatchNodeBeforeRemoved(this, childNode)
+      isDispatchEvent && CompTreeViewUtils.dispatchNodeBeforeRemoved(this, childNode)
       childNode.m_parent = null
       this.m_children.splice(index, 1)
       this.m_removeChildFromContainer(childNode)
       this.m_refreshChildrenContainerHeight(false)
-      isDispatchEvent && treeViewUtils.dispatchNodeRemoved(this, childNode)
+      isDispatchEvent && CompTreeViewUtils.dispatchNodeRemoved(this, childNode)
       return true
     }
     return false
@@ -631,7 +626,7 @@ export default class CompTreeNode<NodeItem extends CompTreeBaseNodeItem = CompTr
   private m_itemOnSelectedChanged(e) {
     e.stopImmediatePropagation()
 
-    treeViewUtils.dispatchSelectedChanged(this)
+    CompTreeViewUtils.dispatchSelectedChanged(this)
   }
 
   /**
@@ -641,8 +636,8 @@ export default class CompTreeNode<NodeItem extends CompTreeBaseNodeItem = CompTr
   private m_itemOnNodePropertyChanged(e) {
     e.stopImmediatePropagation()
 
-    const detail = e.detail as NodePropertyChangeDetail
-    treeViewUtils.dispatchNodePropertyChanged(this, detail)
+    const detail = e.detail as CompTreeViewUtils.NodePropertyChangeDetail
+    CompTreeViewUtils.dispatchNodePropertyChanged(this, detail)
 
     if (detail.property === 'label') {
       this.$nextTick(() => {
