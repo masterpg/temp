@@ -71,7 +71,7 @@
     "eslint-plugin-vue": "^5.2.3",
     "fs-extra": "^8.1.0",
     "glob": "^7.1.6",
-    "node-sass": "^4.13.0",
+    "node-sass": "^4.13.1",
     "prettier": "^1.18.2",
     "sass-loader": "^8.0.0",
     "shelljs": "^0.8.3",
